@@ -1,0 +1,25 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Ferramentas / IDEs
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Variáveis de ambiente (se usar)
+.env
+.env.*
+
