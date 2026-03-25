@@ -1,3 +1,5 @@
+from assembly import ehNumero
+
 def parseExpressao(linha):      #enquanto tiver caracteres não verificados na linha,     
     tokens = []                 #esssa função vai chamar a função estado inicial para verificar cada um individualmente
     i = 0
@@ -7,6 +9,11 @@ def parseExpressao(linha):      #enquanto tiver caracteres não verificados na l
         i, token, estado = estado(linha, i)
         if token:
             tokens.append(token)
+
+    for j in range(len(tokens) - 1):
+        if ehNumero(tokens[j]) and float(tokens[j]) < 0:
+            if tokens[j + 1] == "^":
+                raise Exception("Erro: potência com base negativa não permitida")
 
     return tokens
 
@@ -26,6 +33,9 @@ def estadoInicial(linha, i):    #le os caracteres um por vez, se for um numero c
     if c.isalpha():
         return i, None, estadoIdentificador
 
+    if c == '-' and i + 1 < len(linha) and linha[i + 1].isdigit():
+        return i, None, estadoNumero
+
     if c in "+-*/%^":
         if c == '/' and i + 1 < len(linha) and linha[i + 1] == '/':
             return i + 2, "//", estadoInicial
@@ -34,9 +44,13 @@ def estadoInicial(linha, i):    #le os caracteres um por vez, se for um numero c
     raise Exception(f"Token invalido: ", c)
 
 
-def estadoNumero(linha, i):     #verificar se o numero é valido e retorna ele e aumenta o contador
+def estadoNumero(linha, i):
     num = ""
     pontos = 0
+
+    if linha[i] == '-':
+        num += '-'
+        i += 1
 
     while i < len(linha):
         c = linha[i]
