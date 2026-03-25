@@ -1,17 +1,30 @@
-from lexer import parseExpressao
+from lexer import parseExpressao, tokens_sem_parenteses
 from assembly import gerarAssembly
+from executor import executarExpressao, exibirResultados
+
 
 def main():
     linhas = lerArquivo("teste1.txt")
 
-    for linha in linhas:        #le todas as linhas no arquivo e chama a expressao parseExpressao para cada uma
+    memoria = {}
+    historico = []
+
+    for linha in linhas:
         try:
+            linha_strip = linha.strip()
+            if not linha_strip:
+                continue
             tokens = parseExpressao(linha)
-            print(tokens)
+            resultado = executarExpressao(tokens, memoria, historico)
             asm = gerarAssembly(tokens)
-            print(asm)
+            exibirResultados(
+                linha_strip, 
+                tokens, 
+                resultado, 
+                asm, 
+                memoria, list(historico))
         except Exception as e:
-            print(e)
+            print(f"Erro: {e}")
 
 def lerArquivo(nome):
     with open(nome) as f:
