@@ -7,6 +7,7 @@ def main():
     for linha in linhas:        #le todas as linhas no arquivo e chama a expressao parseExpressao para cada uma
         try:
             tokens = parseExpressao(linha)
+            print(tokens)
             asm = gerarAssembly(tokens)
             print(asm)
         except Exception as e:
