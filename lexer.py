@@ -18,6 +18,10 @@ def parseExpressao(linha):      #enquanto tiver caracteres não verificados na l
     return tokens
 
 
+def tokens_sem_parenteses(tokens):
+    return [t for t in tokens if t not in "()"]
+
+
 def estadoInicial(linha, i):    #le os caracteres um por vez, se for um numero chama a função estadoNumero e uma letra o estadoIndentificador
     c = linha[i]                #se for um caracter valido retorna ele e aumenta o contador i
 
