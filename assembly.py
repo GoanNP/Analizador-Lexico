@@ -9,7 +9,6 @@ def gerarAssembly(tokens):
     const_count = 0
     variaveis_usadas = set()
 
-    # ================= HELPERS =================
 
     def novo_reg_int():
         nonlocal reg_int
@@ -44,7 +43,6 @@ def gerarAssembly(tokens):
 
         stack.append((d, "double"))
 
-    # ================= OPERAÇÕES =================
 
     def operacao_aritmetica(op):
         (r2, _) = stack.pop()
@@ -167,7 +165,6 @@ def gerarAssembly(tokens):
         elif op == "^":
             operacao_potencia()
 
-    # ================= PARSER RECURSIVO =================
 
     def processar(tokens_local):
         i = 0
@@ -211,7 +208,6 @@ def gerarAssembly(tokens):
 
             i += 1
 
-    # ================= INÍCIO =================
 
     text_section.append(".global _start")
     text_section.append(".text")
