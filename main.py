@@ -15,14 +15,9 @@ def main():
             if not linha_strip:
                 continue
             tokens = parseExpressao(linha)
-            resultado = executarExpressao(tokens, memoria, historico)
+            print(tokens)
             asm = gerarAssembly(tokens)
-            exibirResultados(
-                linha_strip, 
-                tokens, 
-                resultado, 
-                asm, 
-                memoria, list(historico))
+            print(asm)
         except Exception as e:
             print(f"Erro: {e}")
 

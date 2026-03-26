@@ -80,7 +80,7 @@ def estadoIdentificador(linha, i):  #verificar se o comando é valido e retorna 
         ident += linha[i]
         i += 1
 
-    if ident not in ["RES", "MEM"]:
-        raise Exception(f"Identificador invalido: ", ident)
+    if ident != "RES" and not ident.isupper():
+        raise Exception(f"Identificador invalido: {ident}")
 
     return i, ident, estadoInicial
