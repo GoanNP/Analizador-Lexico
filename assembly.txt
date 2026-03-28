@@ -1,0 +1,1280 @@
+Linha:     ((100 (20 5 /) +) (3 2 ^) *)
+Tokens:    ['(', '(', '100', '(', '20', '5', '/', ')', '+', ')', '(', '3', '2', '^', ')', '*', ')']
+Resultado: 936.0
+Memoria:   {'_LAST': 936.0}
+Historico: [936.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    LDR R2, =C2
+    VLDR D2, [R2]
+    VDIV.F64 D3, D1, D2
+    LDR R3, =MEM
+    VSTR.F64 D3, [R3]
+    VADD.F64 D4, D0, D3
+    LDR R4, =MEM
+    VSTR.F64 D4, [R4]
+    LDR R5, =C3
+    VLDR D5, [R5]
+    LDR R6, =C4
+    VLDR D6, [R6]
+    VCVT.S32.F64 S0, D6
+    VMOV R7, S0
+    VCVT.S32.F64 S1, D5
+    VMOV R8, S1
+    MOV R9, #1
+L0:
+    CMP R7, #0
+    BEQ L1
+    MUL R9, R9, R8
+    SUB R7, R7, #1
+    B L0
+L1:
+    LDR R10, =MEM
+    VMOV S0, R9
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R10]
+    VMOV S0, R9
+    VCVT.F64.S32 D7, S0
+    VMUL.F64 D8, D4, D7
+    LDR R11, =MEM
+    VSTR.F64 D8, [R11]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 100.0
+C1: .double 20.0
+C2: .double 5.0
+C3: .double 3.0
+C4: .double 2.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     (((8 2 /) (3 1 +) *) (5 2 ^) +)
+Tokens:    ['(', '(', '(', '8', '2', '/', ')', '(', '3', '1', '+', ')', '*', ')', '(', '5', '2', '^', ')', '+', ')']
+Resultado: 41.0
+Memoria:   {'_LAST': 41.0}
+Historico: [936.0, 41.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VDIV.F64 D2, D0, D1
+    LDR R2, =MEM
+    VSTR.F64 D2, [R2]
+    LDR R3, =C2
+    VLDR D3, [R3]
+    LDR R4, =C3
+    VLDR D4, [R4]
+    VADD.F64 D5, D3, D4
+    LDR R5, =MEM
+    VSTR.F64 D5, [R5]
+    VMUL.F64 D6, D2, D5
+    LDR R6, =MEM
+    VSTR.F64 D6, [R6]
+    LDR R7, =C4
+    VLDR D7, [R7]
+    LDR R8, =C5
+    VLDR D8, [R8]
+    VCVT.S32.F64 S0, D8
+    VMOV R9, S0
+    VCVT.S32.F64 S1, D7
+    VMOV R10, S1
+    MOV R11, #1
+L0:
+    CMP R9, #0
+    BEQ L1
+    MUL R11, R11, R10
+    SUB R9, R9, #1
+    B L0
+L1:
+    LDR R0, =MEM
+    VMOV S0, R11
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R0]
+    VMOV S0, R11
+    VCVT.F64.S32 D9, S0
+    VADD.F64 D10, D6, D9
+    LDR R1, =MEM
+    VSTR.F64 D10, [R1]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 8.0
+C1: .double 2.0
+C2: .double 3.0
+C3: .double 1.0
+C4: .double 5.0
+C5: .double 2.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     ((3 4 ^) (20 6 %) +)
+Tokens:    ['(', '(', '3', '4', '^', ')', '(', '20', '6', '%', ')', '+', ')']
+Resultado: 83.0
+Memoria:   {'_LAST': 83.0}
+Historico: [936.0, 41.0, 83.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VCVT.S32.F64 S0, D1
+    VMOV R2, S0
+    VCVT.S32.F64 S1, D0
+    VMOV R3, S1
+    MOV R4, #1
+L0:
+    CMP R2, #0
+    BEQ L1
+    MUL R4, R4, R3
+    SUB R2, R2, #1
+    B L0
+L1:
+    LDR R5, =MEM
+    VMOV S0, R4
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R5]
+    LDR R6, =C2
+    VLDR D2, [R6]
+    LDR R7, =C3
+    VLDR D3, [R7]
+    VCVT.S32.F64 S0, D2
+    VMOV R8, S0
+    VCVT.S32.F64 S1, D3
+    VMOV R9, S1
+    MOV R10, #0
+    MOV R11, R8
+L2:
+    CMP R11, R9
+    BLT L3
+    SUB R11, R11, R9
+    ADD R10, R10, #1
+    B L2
+L3:
+    LDR R0, =MEM
+    VMOV S0, R11
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R0]
+    VMOV S0, R4
+    VCVT.F64.S32 D4, S0
+    VMOV S0, R11
+    VCVT.F64.S32 D5, S0
+    VADD.F64 D6, D4, D5
+    LDR R1, =MEM
+    VSTR.F64 D6, [R1]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L4:
+    CMP R2, #10
+    BLT L5
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L4
+L5:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L6:
+    CMP R7, #10
+    BLT L7
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L6
+L7:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L8:
+    CMP R8, #10
+    BLT L9
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L8
+L9:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 3.0
+C1: .double 4.0
+C2: .double 20.0
+C3: .double 6.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     (((7 3 %) (2 5 ^) *) (10 3 /) +)
+Tokens:    ['(', '(', '(', '7', '3', '%', ')', '(', '2', '5', '^', ')', '*', ')', '(', '10', '3', '/', ')', '+', ')']
+Resultado: 35.0
+Memoria:   {'_LAST': 35.0}
+Historico: [936.0, 41.0, 83.0, 35.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VCVT.S32.F64 S0, D0
+    VMOV R2, S0
+    VCVT.S32.F64 S1, D1
+    VMOV R3, S1
+    MOV R4, #0
+    MOV R5, R2
+L0:
+    CMP R5, R3
+    BLT L1
+    SUB R5, R5, R3
+    ADD R4, R4, #1
+    B L0
+L1:
+    LDR R6, =MEM
+    VMOV S0, R5
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R6]
+    LDR R7, =C2
+    VLDR D2, [R7]
+    LDR R8, =C3
+    VLDR D3, [R8]
+    VCVT.S32.F64 S0, D3
+    VMOV R9, S0
+    VCVT.S32.F64 S1, D2
+    VMOV R10, S1
+    MOV R11, #1
+L2:
+    CMP R9, #0
+    BEQ L3
+    MUL R11, R11, R10
+    SUB R9, R9, #1
+    B L2
+L3:
+    LDR R0, =MEM
+    VMOV S0, R11
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R0]
+    VMOV S0, R5
+    VCVT.F64.S32 D4, S0
+    VMOV S0, R11
+    VCVT.F64.S32 D5, S0
+    VMUL.F64 D6, D4, D5
+    LDR R1, =MEM
+    VSTR.F64 D6, [R1]
+    LDR R2, =C4
+    VLDR D7, [R2]
+    LDR R3, =C5
+    VLDR D8, [R3]
+    VDIV.F64 D9, D7, D8
+    LDR R4, =MEM
+    VSTR.F64 D9, [R4]
+    VADD.F64 D10, D6, D9
+    LDR R5, =MEM
+    VSTR.F64 D10, [R5]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L4:
+    CMP R2, #10
+    BLT L5
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L4
+L5:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L6:
+    CMP R7, #10
+    BLT L7
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L6
+L7:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L8:
+    CMP R8, #10
+    BLT L9
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L8
+L9:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 7.0
+C1: .double 3.0
+C2: .double 2.0
+C3: .double 5.0
+C4: .double 10.0
+C5: .double 3.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     ((50 (10 2 /) +) (4 3 ^) *)
+Tokens:    ['(', '(', '50', '(', '10', '2', '/', ')', '+', ')', '(', '4', '3', '^', ')', '*', ')']
+Resultado: 3520.0
+Memoria:   {'_LAST': 3520.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    LDR R2, =C2
+    VLDR D2, [R2]
+    VDIV.F64 D3, D1, D2
+    LDR R3, =MEM
+    VSTR.F64 D3, [R3]
+    VADD.F64 D4, D0, D3
+    LDR R4, =MEM
+    VSTR.F64 D4, [R4]
+    LDR R5, =C3
+    VLDR D5, [R5]
+    LDR R6, =C4
+    VLDR D6, [R6]
+    VCVT.S32.F64 S0, D6
+    VMOV R7, S0
+    VCVT.S32.F64 S1, D5
+    VMOV R8, S1
+    MOV R9, #1
+L0:
+    CMP R7, #0
+    BEQ L1
+    MUL R9, R9, R8
+    SUB R7, R7, #1
+    B L0
+L1:
+    LDR R10, =MEM
+    VMOV S0, R9
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R10]
+    VMOV S0, R9
+    VCVT.F64.S32 D7, S0
+    VMUL.F64 D8, D4, D7
+    LDR R11, =MEM
+    VSTR.F64 D8, [R11]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 50.0
+C1: .double 10.0
+C2: .double 2.0
+C3: .double 4.0
+C4: .double 3.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     ((5 3 ^) (18 4 %) +)
+Tokens:    ['(', '(', '5', '3', '^', ')', '(', '18', '4', '%', ')', '+', ')']
+Resultado: 127.0
+Memoria:   {'_LAST': 127.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VCVT.S32.F64 S0, D1
+    VMOV R2, S0
+    VCVT.S32.F64 S1, D0
+    VMOV R3, S1
+    MOV R4, #1
+L0:
+    CMP R2, #0
+    BEQ L1
+    MUL R4, R4, R3
+    SUB R2, R2, #1
+    B L0
+L1:
+    LDR R5, =MEM
+    VMOV S0, R4
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R5]
+    LDR R6, =C2
+    VLDR D2, [R6]
+    LDR R7, =C3
+    VLDR D3, [R7]
+    VCVT.S32.F64 S0, D2
+    VMOV R8, S0
+    VCVT.S32.F64 S1, D3
+    VMOV R9, S1
+    MOV R10, #0
+    MOV R11, R8
+L2:
+    CMP R11, R9
+    BLT L3
+    SUB R11, R11, R9
+    ADD R10, R10, #1
+    B L2
+L3:
+    LDR R0, =MEM
+    VMOV S0, R11
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R0]
+    VMOV S0, R4
+    VCVT.F64.S32 D4, S0
+    VMOV S0, R11
+    VCVT.F64.S32 D5, S0
+    VADD.F64 D6, D4, D5
+    LDR R1, =MEM
+    VSTR.F64 D6, [R1]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L4:
+    CMP R2, #10
+    BLT L5
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L4
+L5:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L6:
+    CMP R7, #10
+    BLT L7
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L6
+L7:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L8:
+    CMP R8, #10
+    BLT L9
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L8
+L9:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 5.0
+C1: .double 3.0
+C2: .double 18.0
+C3: .double 4.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     ((12 3 /) MEM)
+Tokens:    ['(', '(', '12', '3', '/', ')', 'MEM', ')']
+Resultado: 4.0
+Memoria:   {'_LAST': 4.0, 'MEM': 4.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0, 4.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VDIV.F64 D2, D0, D1
+    LDR R2, =MEM
+    VSTR.F64 D2, [R2]
+    LDR R3, =MEM
+    VLDR D3, [R3]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L0:
+    CMP R2, #10
+    BLT L1
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L0
+L1:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L2:
+    CMP R7, #10
+    BLT L3
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L2
+L3:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L4:
+    CMP R8, #10
+    BLT L5
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L4
+L5:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 12.0
+C1: .double 3.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
+Linha:     (((MEM) (2 5 ^) *) (1 RES) +)
+Tokens:    ['(', '(', '(', 'MEM', ')', '(', '2', '5', '^', ')', '*', ')', '(', '1', 'RES', ')', '+', ')']
+Resultado: 132.0
+Memoria:   {'_LAST': 132.0, 'MEM': 4.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0, 4.0, 132.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    LDR R1, =C0
+    VLDR D1, [R1]
+    LDR R2, =C1
+    VLDR D2, [R2]
+    VCVT.S32.F64 S0, D2
+    VMOV R3, S0
+    VCVT.S32.F64 S1, D1
+    VMOV R4, S1
+    MOV R5, #1
+L0:
+    CMP R3, #0
+    BEQ L1
+    MUL R5, R5, R4
+    SUB R3, R3, #1
+    B L0
+L1:
+    LDR R6, =MEM
+    VMOV S0, R5
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R6]
+    VMOV S0, R5
+    VCVT.F64.S32 D3, S0
+    VMUL.F64 D4, D0, D3
+    LDR R7, =MEM
+    VSTR.F64 D4, [R7]
+    LDR R8, =C2
+    VLDR D5, [R8]
+    LDR R9, =RES
+    VLDR D6, [R9]
+    VADD.F64 D7, D5, D6
+    LDR R10, =MEM
+    VSTR.F64 D7, [R10]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 2.0
+C1: .double 5.0
+C2: .double 1.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+RES: .double 0.0
+--------------------------------------------------
+Linha:     (((7 2 ^) V MEM) (MEM) (9 3 /) *)
+Tokens:    ['(', '(', '(', '7', '2', '^', ')', 'V', 'MEM', ')', '(', 'MEM', ')', '(', '9', '3', '/', ')', '*', ')']
+Resultado: 147.0
+Memoria:   {'_LAST': 147.0, 'MEM': 49.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0, 4.0, 132.0, 147.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VCVT.S32.F64 S0, D1
+    VMOV R2, S0
+    VCVT.S32.F64 S1, D0
+    VMOV R3, S1
+    MOV R4, #1
+L0:
+    CMP R2, #0
+    BEQ L1
+    MUL R4, R4, R3
+    SUB R2, R2, #1
+    B L0
+L1:
+    LDR R5, =MEM
+    VMOV S0, R4
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R5]
+    LDR R6, =V
+    VLDR D2, [R6]
+    LDR R7, =MEM
+    VLDR D3, [R7]
+    LDR R8, =MEM
+    VLDR D4, [R8]
+    LDR R9, =C2
+    VLDR D5, [R9]
+    LDR R10, =C3
+    VLDR D6, [R10]
+    VDIV.F64 D7, D5, D6
+    LDR R11, =MEM
+    VSTR.F64 D7, [R11]
+    VMUL.F64 D8, D4, D7
+    LDR R0, =MEM
+    VSTR.F64 D8, [R0]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 7.0
+C1: .double 2.0
+C2: .double 9.0
+C3: .double 3.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+V: .double 0.0
+--------------------------------------------------
+Linha:     (((1 RES) (2 RES) +) (8 2 %) +)
+Tokens:    ['(', '(', '(', '1', 'RES', ')', '(', '2', 'RES', ')', '+', ')', '(', '8', '2', '%', ')', '+', ')']
+Resultado: 279.0
+Memoria:   {'_LAST': 279.0, 'MEM': 49.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0, 4.0, 132.0, 147.0, 279.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =RES
+    VLDR D1, [R1]
+    LDR R2, =C1
+    VLDR D2, [R2]
+    LDR R3, =RES
+    VLDR D3, [R3]
+    VADD.F64 D4, D2, D3
+    LDR R4, =MEM
+    VSTR.F64 D4, [R4]
+    LDR R5, =C2
+    VLDR D5, [R5]
+    LDR R6, =C3
+    VLDR D6, [R6]
+    VCVT.S32.F64 S0, D5
+    VMOV R7, S0
+    VCVT.S32.F64 S1, D6
+    VMOV R8, S1
+    MOV R9, #0
+    MOV R10, R7
+L0:
+    CMP R10, R8
+    BLT L1
+    SUB R10, R10, R8
+    ADD R9, R9, #1
+    B L0
+L1:
+    LDR R11, =MEM
+    VMOV S0, R10
+    VCVT.F64.S32 D0, S0
+    VSTR.F64 D0, [R11]
+    VMOV S0, R10
+    VCVT.F64.S32 D7, S0
+    VADD.F64 D8, D4, D7
+    LDR R0, =MEM
+    VSTR.F64 D8, [R0]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L2:
+    CMP R2, #10
+    BLT L3
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L2
+L3:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L4:
+    CMP R7, #10
+    BLT L5
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L4
+L5:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L6:
+    CMP R8, #10
+    BLT L7
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L6
+L7:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 1.0
+C1: .double 2.0
+C2: .double 8.0
+C3: .double 2.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+RES: .double 0.0
+--------------------------------------------------
+Linha:     (((15 5 /) (3 2 +) *) MEM)
+Tokens:    ['(', '(', '(', '15', '5', '/', ')', '(', '3', '2', '+', ')', '*', ')', 'MEM', ')']
+Resultado: 15.0
+Memoria:   {'_LAST': 15.0, 'MEM': 15.0}
+Historico: [936.0, 41.0, 83.0, 35.0, 3520.0, 127.0, 4.0, 132.0, 147.0, 279.0, 15.0]
+Assembly:
+.global _start
+.text
+_start:
+    LDR R0, =C0
+    VLDR D0, [R0]
+    LDR R1, =C1
+    VLDR D1, [R1]
+    VDIV.F64 D2, D0, D1
+    LDR R2, =MEM
+    VSTR.F64 D2, [R2]
+    LDR R3, =C2
+    VLDR D3, [R3]
+    LDR R4, =C3
+    VLDR D4, [R4]
+    VADD.F64 D5, D3, D4
+    LDR R5, =MEM
+    VSTR.F64 D5, [R5]
+    VMUL.F64 D6, D2, D5
+    LDR R6, =MEM
+    VSTR.F64 D6, [R6]
+    LDR R7, =MEM
+    VLDR D7, [R7]
+    LDR R0, =MEM
+    VLDR D0, [R0]
+    VCVT.S32.F64 S0, D0
+    VMOV R1, S0
+    MOV R2, R1
+    MOV R3, #0
+    MOV R4, #0
+    MOV R5, #0
+    MOV R6, #0
+L0:
+    CMP R2, #10
+    BLT L1
+    SUB R2, R2, #10
+    ADD R4, R4, #1
+    B L0
+L1:
+    MOV R3, R2
+    MOV R7, R4
+    MOV R4, #0
+L2:
+    CMP R7, #10
+    BLT L3
+    SUB R7, R7, #10
+    ADD R5, R5, #1
+    B L2
+L3:
+    MOV R4, R7
+    MOV R8, R5
+    MOV R5, #0
+L4:
+    CMP R8, #10
+    BLT L5
+    SUB R8, R8, #10
+    ADD R6, R6, #1
+    B L4
+L5:
+    MOV R5, R8
+    LDR R9, =SEG_TABLE
+    LDR R10, [R9, R3, LSL #2]
+    LDR R11, [R9, R4, LSL #2]
+    LDR R0, [R9, R5, LSL #2]
+    LDR R1, [R9, R6, LSL #2]
+    LSL R11, R11, #8
+    LSL R0, R0, #16
+    LSL R1, R1, #24
+    ORR R10, R10, R11
+    ORR R10, R10, R0
+    ORR R10, R10, R1
+    LDR R2, =0xFF200020
+    STR R10, [R2]
+    B .
+
+.data
+C0: .double 15.0
+C1: .double 5.0
+C2: .double 3.0
+C3: .double 2.0
+SEG_TABLE:
+    .word 0x3F
+    .word 0x06
+    .word 0x5B
+    .word 0x4F
+    .word 0x66
+    .word 0x6D
+    .word 0x7D
+    .word 0x07
+    .word 0x7F
+    .word 0x6F
+MEM: .double 0.0
+--------------------------------------------------
