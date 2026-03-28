@@ -5,7 +5,7 @@ def _inteiro_truncado(x):
     return int(float(x))
 
 
-def _div_quociente_trunc_zero(a, b): #divisao inteira com truncagem para zero
+def _div_quociente_trunc_zero(a, b):
     q = abs(a) // abs(b)
     if (a < 0) ^ (b < 0):
         q = -q
@@ -20,11 +20,7 @@ def executarExpressao(tokens, memoria, historico):
     while i < len(tokens):
         token = tokens[i]
 
-        if token == "(":
-            i += 1
-            continue
-
-        if token == ")":
+        if token == "(" or token == ")":
             i += 1
             continue
 
@@ -53,9 +49,8 @@ def executarExpressao(tokens, memoria, historico):
 
         elif token in ["+", "-", "*", "/", "//", "%", "^"]:
             if len(pilha) < 2:
-                raise Exception(
-                    f"Erro: operacao '{token}' requer dois operandos na pilha"
-                )
+                raise Exception(f"Erro: operacao '{token}' requer dois operandos")
+
             b = _inteiro_truncado(pilha.pop())
             a = _inteiro_truncado(pilha.pop())
 
@@ -65,13 +60,9 @@ def executarExpressao(tokens, memoria, historico):
                 resultado = float(a - b)
             elif token == "*":
                 resultado = float(a * b)
-            elif token == "/":
+            elif token == "/" or token == "//":
                 if b == 0:
                     raise Exception("Erro: divisao por zero")
-                resultado = float(_div_quociente_trunc_zero(a, b))
-            elif token == "//":
-                if b == 0:
-                    raise Exception("Erro: divisao inteira por zero")
                 resultado = float(_div_quociente_trunc_zero(a, b))
             elif token == "%":
                 if b == 0:
@@ -80,17 +71,8 @@ def executarExpressao(tokens, memoria, historico):
                 resultado = float(a - q * b)
             elif token == "^":
                 if a < 0:
-                    raise Exception(
-                        "Erro: potencia com base negativa nao permitida"
-                    )
-                exp = b
-                if exp < 0:
-                    resultado = 1.0
-                else:
-                    p = 1
-                    for _ in range(exp):
-                        p *= a
-                    resultado = float(p)
+                    raise Exception("Erro: potencia com base negativa")
+                resultado = float(a ** b if b >= 0 else 1)
 
             pilha.append(resultado)
 
@@ -101,19 +83,36 @@ def executarExpressao(tokens, memoria, historico):
     elif ultimo_gravado_mem is not None:
         resultado_final = float(ultimo_gravado_mem)
     else:
-        raise Exception("Erro: expressao vazia ou invalida")
+        raise Exception("Erro: expressao invalida")
+
     historico.append(resultado_final)
     memoria["_LAST"] = resultado_final
+
     return resultado_final
 
 
-def exibirResultados(linha, tokens, resultado, asm, memoria=None, historico=None):
-    print(f"Linha:     {linha!r}")
-    print(f"Tokens:    {tokens}")
-    print(f"Resultado: {resultado}")
+def exibirResultados(linha, tokens, resultado, asm, memoria=None, historico=None, arquivo_saida=None):
+    saida = []
+    
+    saida.append(f"Linha:     {linha.strip()}")
+    saida.append(f"Tokens:    {tokens}")
+    saida.append(f"Resultado: {resultado}")
+
     if memoria is not None:
-        print(f"Memoria:   {memoria}")
+        saida.append(f"Memoria:   {memoria}")
     if historico is not None:
-        print(f"Historico: {historico}")
-    print(f"Assembly:\n{asm}")
-    print("-" * 40)
+        saida.append(f"Historico: {historico}")
+
+    texto_terminal = "\n".join(saida)
+    print(texto_terminal)
+
+    saida.append("Assembly:")
+    saida.append(asm)
+    saida.append("-" * 50)
+
+    texto_final = "\n".join(saida)
+
+
+    if arquivo_saida:
+        with open(arquivo_saida, "a") as f:
+            f.write(texto_final + "\n")
